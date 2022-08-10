@@ -133,20 +133,19 @@ type PromoterProductListResult struct {
 	Err    error                       // 错误
 }
 
-func NewPromoterProductListResult(result PromoterProductListResponse, body []byte, http gorequest.Response, err error) *PromoterProductListResult {
+func newPromoterProductListResult(result PromoterProductListResponse, body []byte, http gorequest.Response, err error) *PromoterProductListResult {
 	return &PromoterProductListResult{Result: result, Body: body, Http: http, Err: err}
 }
 
 // PromoterProductList 查询全量商品
 // https://developers.weixin.qq.com/doc/ministore/union/access-guidelines/promoter/api/product/category.html#_2-%E6%9F%A5%E8%AF%A2%E5%85%A8%E9%87%8F%E5%95%86%E5%93%81
-func (app *App) PromoterProductList(notMustParams ...Params) *PromoterProductListResult {
-	app.accessToken = app.GetAccessToken()
+func (c *Client) PromoterProductList(notMustParams ...gorequest.Params) *PromoterProductListResult {
 	// 参数
-	params := app.NewParamsWith(notMustParams...)
+	params := gorequest.NewParamsWith(notMustParams...)
 	// 请求
-	request, err := app.request(UnionUrl+fmt.Sprintf("/promoter/product/list?access_token=%s", app.accessToken), params, http.MethodGet)
+	request, err := c.request(apiUrl+fmt.Sprintf("/promoter/product/list?access_token=%s", c.getAccessToken()), params, http.MethodGet)
 	// 定义
 	var response PromoterProductListResponse
 	err = json.Unmarshal(request.ResponseBody, &response)
-	return NewPromoterProductListResult(response, request.ResponseBody, request, err)
+	return newPromoterProductListResult(response, request.ResponseBody, request, err)
 }

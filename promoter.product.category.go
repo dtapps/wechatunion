@@ -23,18 +23,17 @@ type PromoterProductCategoryResult struct {
 	Err    error                           // 错误
 }
 
-func NewPromoterProductCategoryResult(result PromoterProductCategoryResponse, body []byte, http gorequest.Response, err error) *PromoterProductCategoryResult {
+func newPromoterProductCategoryResult(result PromoterProductCategoryResponse, body []byte, http gorequest.Response, err error) *PromoterProductCategoryResult {
 	return &PromoterProductCategoryResult{Result: result, Body: body, Http: http, Err: err}
 }
 
 // PromoterProductCategory 获取联盟商品类目列表及类目ID
 // https://developers.weixin.qq.com/doc/ministore/union/access-guidelines/promoter/api/product/category.html#_1-%E8%8E%B7%E5%8F%96%E8%81%94%E7%9B%9F%E5%95%86%E5%93%81%E7%B1%BB%E7%9B%AE%E5%88%97%E8%A1%A8%E5%8F%8A%E7%B1%BB%E7%9B%AEID
-func (app *App) PromoterProductCategory() *PromoterProductCategoryResult {
-	app.accessToken = app.GetAccessToken()
+func (c *Client) PromoterProductCategory() *PromoterProductCategoryResult {
 	// 请求
-	request, err := app.request(UnionUrl+fmt.Sprintf("/promoter/product/category?access_token=%s", app.accessToken), map[string]interface{}{}, http.MethodGet)
+	request, err := c.request(apiUrl+fmt.Sprintf("/promoter/product/category?access_token=%s", c.getAccessToken()), map[string]interface{}{}, http.MethodGet)
 	// 定义
 	var response PromoterProductCategoryResponse
 	err = json.Unmarshal(request.ResponseBody, &response)
-	return NewPromoterProductCategoryResult(response, request.ResponseBody, request, err)
+	return newPromoterProductCategoryResult(response, request.ResponseBody, request, err)
 }
