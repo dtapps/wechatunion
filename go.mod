@@ -1,11 +1,11 @@
 module go.dtapp.net/wechatunion
 
-go 1.18
+go 1.19
 
 require (
-	go.dtapp.net/dorm v1.0.13
-	go.dtapp.net/golog v1.0.18
-	go.dtapp.net/gorequest v1.0.23
+	go.dtapp.net/dorm v1.0.14
+	go.dtapp.net/golog v1.0.21
+	go.dtapp.net/gorequest v1.0.24
 	go.dtapp.net/gotime v1.0.5
 	gorm.io/gorm v1.23.8
 )
@@ -19,7 +19,6 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
-	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-redis/redis/v9 v9.0.0-beta.2 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/goccy/go-json v0.9.10 // indirect
@@ -63,7 +62,7 @@ require (
 	github.com/xdg-go/scram v1.1.1 // indirect
 	github.com/xdg-go/stringprep v1.0.3 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
-	go.dtapp.net/goip v1.0.23 // indirect
+	go.dtapp.net/goip v1.0.24 // indirect
 	go.dtapp.net/gojson v1.0.1 // indirect
 	go.dtapp.net/gorandom v1.0.1 // indirect
 	go.dtapp.net/gostring v1.0.6 // indirect
