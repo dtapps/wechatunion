@@ -8,4 +8,4 @@ const (
 	logTable = "wechatunion"
 )
 
-const Version = "1.0.3"
+const Version = "1.0.4"
