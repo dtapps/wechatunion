@@ -7,15 +7,15 @@ import (
 )
 
 func (c *Client) GetAccessToken(ctx context.Context) string {
-	if c.config.RedisClient.Db == nil {
+	if c.redisClient.Db == nil {
 		return c.config.AccessToken
 	}
-	newCache := c.config.RedisClient.NewSimpleStringCache(c.config.RedisClient.NewStringOperation(), time.Second*7000)
+	newCache := c.redisClient.NewSimpleStringCache(c.redisClient.NewStringOperation(), time.Second*7000)
 	newCache.DBGetter = func() string {
 		token := c.CgiBinToken(ctx)
 		return token.Result.AccessToken
 	}
-	return newCache.GetCache(c.getAccessTokenCacheKeyName())
+	return newCache.GetCache(ctx, c.getAccessTokenCacheKeyName())
 }
 
 func (c *Client) getAccessTokenCacheKeyName() string {
