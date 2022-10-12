@@ -16,16 +16,12 @@ type ClientConfig struct {
 	AppSecret           string              // 小程序唯一凭证密钥，即 appSecret
 	Pid                 string              // 推广位PID
 	RedisClient         *dorm.RedisClient   // 缓存数据库
-	ApiGormClientFun    golog.ApiClientFun  // 日志配置
-	Debug               bool                // 日志开关
-	ZapLog              *golog.ZapLog       // 日志服务
 	RedisCachePrefixFun redisCachePrefixFun // 缓存前缀
 }
 
 // Client 实例
 type Client struct {
 	requestClient *gorequest.App // 请求服务
-	zapLog        *golog.ZapLog  // 日志服务
 	config        struct {
 		appId       string // 小程序唯一凭证，即 appId
 		appSecret   string // 小程序唯一凭证密钥，即 appSecret
@@ -47,19 +43,11 @@ func NewClient(config *ClientConfig) (*Client, error) {
 
 	c := &Client{}
 
-	c.zapLog = config.ZapLog
-
 	c.config.appId = config.AppId
 	c.config.appSecret = config.AppSecret
 	c.config.pid = config.Pid
 
 	c.requestClient = gorequest.NewHttp()
-
-	apiGormClient := config.ApiGormClientFun()
-	if apiGormClient != nil {
-		c.log.client = apiGormClient
-		c.log.status = true
-	}
 
 	c.cache.redisClient = config.RedisClient
 
