@@ -3,7 +3,6 @@ package wechatunion
 import (
 	"go.dtapp.net/dorm"
 	"go.dtapp.net/golog"
-	"go.dtapp.net/gorequest"
 )
 
 // 缓存前缀
@@ -12,7 +11,7 @@ type redisCachePrefixFun func() (wechatAccessToken string)
 
 // ClientConfig 实例配置
 type ClientConfig struct {
-	AppId               string              // 小程序唯一凭证，即 appId
+	AppId               string              `json:"app_id"` // 小程序唯一凭证，即 appId
 	AppSecret           string              // 小程序唯一凭证密钥，即 appSecret
 	Pid                 string              // 推广位PID
 	RedisClient         *dorm.RedisClient   // 缓存数据库
@@ -21,8 +20,7 @@ type ClientConfig struct {
 
 // Client 实例
 type Client struct {
-	requestClient *gorequest.App // 请求服务
-	config        struct {
+	config struct {
 		appId       string // 小程序唯一凭证，即 appId
 		appSecret   string // 小程序唯一凭证密钥，即 appSecret
 		accessToken string // 接口调用凭证
@@ -32,9 +30,9 @@ type Client struct {
 		redisClient             *dorm.RedisClient // 缓存数据库
 		wechatAccessTokenPrefix string            // AccessToken
 	}
-	log struct {
-		status bool             // 状态
-		client *golog.ApiClient // 日志服务
+	gormLog struct {
+		status bool           // 状态
+		client *golog.ApiGorm // 日志服务
 	}
 }
 
@@ -46,8 +44,6 @@ func NewClient(config *ClientConfig) (*Client, error) {
 	c.config.appId = config.AppId
 	c.config.appSecret = config.AppSecret
 	c.config.pid = config.Pid
-
-	c.requestClient = gorequest.NewHttp()
 
 	c.cache.redisClient = config.RedisClient
 

@@ -13,5 +13,5 @@
 #### 安装
 
 ```shell
-go get -v -u go.dtapp.net/wechatunion
+go get -v -u go.dtapp.net/wechatunion@v1.0.13
 ```
