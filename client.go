@@ -1,7 +1,7 @@
 package wechatunion
 
 import (
-	"go.dtapp.net/dorm"
+	"github.com/redis/go-redis/v9"
 	"go.dtapp.net/golog"
 )
 
@@ -14,7 +14,7 @@ type ClientConfig struct {
 	AppId               string              `json:"app_id"` // 小程序唯一凭证，即 appId
 	AppSecret           string              // 小程序唯一凭证密钥，即 appSecret
 	Pid                 string              // 推广位PID
-	RedisClient         *dorm.RedisClient   // 缓存数据库
+	RedisClient         *redis.Client       // 缓存数据库
 	RedisCachePrefixFun redisCachePrefixFun // 缓存前缀
 }
 
@@ -27,8 +27,8 @@ type Client struct {
 		pid         string // 推广位PID
 	}
 	cache struct {
-		redisClient             *dorm.RedisClient // 缓存数据库
-		wechatAccessTokenPrefix string            // AccessToken
+		redisClient             *redis.Client // 缓存数据库
+		wechatAccessTokenPrefix string        // AccessToken
 	}
 	gormLog struct {
 		status bool           // 状态

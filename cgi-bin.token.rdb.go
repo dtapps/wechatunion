@@ -6,15 +6,16 @@ import (
 )
 
 func (c *Client) GetAccessToken(ctx context.Context) string {
-	if c.cache.redisClient.GetDb() == nil {
+	if c.cache.redisClient == nil {
 		return c.config.accessToken
 	}
-	newCache := c.cache.redisClient.NewSimpleStringCache(c.cache.redisClient.NewStringOperation(), time.Second*7000)
-	newCache.DBGetter = func() string {
-		token, _ := c.CgiBinToken(ctx)
-		return token.Result.AccessToken
+	result, _ := c.cache.redisClient.Get(ctx, c.getAccessTokenCacheKeyName()).Result()
+	if result != "" {
+		return result
 	}
-	return newCache.GetCache(ctx, c.getAccessTokenCacheKeyName())
+	token, _ := c.CgiBinToken(ctx)
+	c.cache.redisClient.Set(ctx, c.getAccessTokenCacheKeyName(), token.Result.AccessToken, time.Second*7000)
+	return token.Result.AccessToken
 }
 
 func (c *Client) getAccessTokenCacheKeyName() string {

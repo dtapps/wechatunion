@@ -1,8 +1,8 @@
 <h1>
-<a href="https://www.dtapp.net/">Golang wechatunion</a>
+<a href="https://www.dtapp.net/">Golang </a>
 </h1>
 
-📦 Golang wechatunion
+📦 Golang 微信小程序联盟
 
 [comment]: <> (go)
 [![godoc](https://pkg.go.dev/badge/go.dtapp.net/wechatunion?status.svg)](https://pkg.go.dev/go.dtapp.net/wechatunion)
@@ -13,5 +13,5 @@
 #### 安装
 
 ```shell
-go get -v -u go.dtapp.net/wechatunion@v1.0.13
+go get -v -u go.dtapp.net/wechatunion@v1.0.14
 ```
